@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="mn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>Нэвтрэх</title>
+  </head>
+  <body class="container">
+    <h1>Нэвтрэх</h1>
+    <form id="login-form" class="form card" style="max-width:480px;">
+      <div class="form__group">
+        <label>Имэйл</label>
+        <input class="input" name="email" required />
+      </div>
+      <div class="form__group">
+        <label>Нууц үг</label>
+        <input class="input" name="password" type="password" required />
+      </div>
+      <button class="button" type="submit">Нэвтрэх</button>
+      <p id="login-result"></p>
+    </form>
+    <script type="module">
+      import { login } from './js/app.js';
+
+      const form = document.getElementById('login-form');
+      const result = document.getElementById('login-result');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const res = await login(formData.get('email'), formData.get('password'));
+        if (res.token) {
+          result.textContent = 'Амжилттай. Нүүр рүү шилжиж байна...';
+          setTimeout(() => (window.location.href = '/'), 800);
+        } else {
+          result.textContent = res.message || 'Алдаа гарлаа';
+        }
+      });
+    </script>
+  </body>
+</html>

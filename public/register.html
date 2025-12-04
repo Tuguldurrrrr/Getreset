@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="mn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>Бүртгүүлэх</title>
+  </head>
+  <body class="container">
+    <h1>Бүртгүүлэх</h1>
+    <form id="register-form" class="form card" style="max-width:520px;">
+      <div class="form__group">
+        <label>Нэр</label>
+        <input class="input" name="name" required />
+      </div>
+      <div class="form__group">
+        <label>Имэйл</label>
+        <input class="input" name="email" type="email" required />
+      </div>
+      <div class="form__group">
+        <label>Утас</label>
+        <input class="input" name="phone" />
+      </div>
+      <div class="form__group">
+        <label>Нууц үг</label>
+        <input class="input" name="password" type="password" required />
+      </div>
+      <button class="button" type="submit">Бүртгүүлэх</button>
+      <p id="register-result"></p>
+    </form>
+    <script type="module">
+      import { registerUser } from './js/app.js';
+
+      const form = document.getElementById('register-form');
+      const result = document.getElementById('register-result');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const data = await registerUser(form);
+        result.textContent = data.token ? 'Амжилттай бүртгэгдлээ' : data.message || 'Алдаа';
+      });
+    </script>
+  </body>
+</html>

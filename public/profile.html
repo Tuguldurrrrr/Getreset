@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="mn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>Профайл</title>
+  </head>
+  <body class="container">
+    <h1>Миний мэдээлэл</h1>
+    <div class="card" id="profile-card">JWT токен ашиглан /api/auth/me дуудаж өгөгдлийг харуулна.</div>
+    <script type="module">
+      const token = localStorage.getItem('token');
+      if (!token) {
+        document.getElementById('profile-card').textContent = 'Эхлээд нэвтэрнэ үү';
+      } else {
+        fetch('/api/auth/me', { headers: { Authorization: `Bearer ${token}` } })
+          .then((r) => r.json())
+          .then((user) => {
+            document.getElementById('profile-card').innerHTML = `
+              <p>Нэр: ${user.name}</p>
+              <p>Имэйл: ${user.email}</p>
+              <p>Дүр: ${user.role}</p>
+              <p>Бүртгэгдсэн: ${new Date(user.created_at).toLocaleDateString()}</p>
+            `;
+          });
+      }
+    </script>
+  </body>
+</html>

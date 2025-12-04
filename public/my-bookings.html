@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="mn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>Миний захиалга</title>
+  </head>
+  <body class="container">
+    <h1>Захиалгын жагсаалт</h1>
+    <p>Нэвтэрсэн хэрэглэгчийн JWT токеноор API дуудаж захиалгын явцыг харуулна.</p>
+    <div class="card">
+      <table class="table" id="booking-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Машин</th>
+            <th>Статус</th>
+            <th>Огноо</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <script type="module">
+      import { fetchBookings } from './js/app.js';
+
+      const tbody = document.querySelector('#booking-table tbody');
+      fetchBookings().then((rows) => {
+        tbody.innerHTML = rows
+          .map(
+            (b) => `
+          <tr>
+            <td>${b.id}</td>
+            <td>${b.car_name}</td>
+            <td><span class="badge">${b.status}</span></td>
+            <td>${new Date(b.start_date).toLocaleDateString()}</td>
+          </tr>
+        `,
+          )
+          .join('');
+      });
+    </script>
+  </body>
+</html>
