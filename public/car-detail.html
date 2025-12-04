@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="mn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>Машины дэлгэрэнгүй</title>
+  </head>
+  <body class="container">
+    <a href="/cars.html">Буцах</a>
+    <div id="detail" class="card"></div>
+    <script type="module">
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      fetch(`/api/cars/${id}`)
+        .then((r) => r.json())
+        .then((car) => {
+          document.getElementById('detail').innerHTML = `
+            <img src="${car.image_url || 'https://placehold.co/800x400?text=Car'}" style="width:100%; border-radius:12px;" />
+            <h1>${car.name}</h1>
+            <p>${car.category_name} · ${car.fuel_type} · ${car.transmission}</p>
+            <p><strong>$${car.daily_rate}</strong>/өдөр</p>
+          `;
+        });
+    </script>
+  </body>
+</html>

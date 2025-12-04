@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="mn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>Авто түрээс - Нүүр</title>
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo">GetReset Cars</div>
+      <nav class="nav">
+        <a class="nav__link" href="/cars.html">Машин хайх</a>
+        <a class="nav__link" href="/login.html">Нэвтрэх</a>
+        <a class="nav__link" href="/register.html">Бүртгүүлэх</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div>
+          <h1>Орчин үеийн машины түрээс</h1>
+          <p>Аюулгүй, хурдан, онлайн захиалга. Админ, менежер, жолооч, хэрэглэгчдийн ялгаатай эрх.</p>
+          <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
+            <a class="button" href="/cars.html">Машин харах</a>
+            <a class="button" href="/my-bookings.html">Миний захиалгууд</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3 class="card__title">Шүүлт</h3>
+          <form id="search-form" class="form">
+            <div class="form__group">
+              <label>Ангилал ID</label>
+              <input class="input" name="category" placeholder="1,2,3" />
+            </div>
+            <div class="form__group">
+              <label>Үнийн доод</label>
+              <input class="input" name="minPrice" type="number" />
+            </div>
+            <div class="form__group">
+              <label>Үнийн дээд</label>
+              <input class="input" name="maxPrice" type="number" />
+            </div>
+            <button class="button" type="submit">Шүүх</button>
+          </form>
+        </div>
+      </section>
+
+      <section style="margin-top:2rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+          <h2>Онцлох машинууд</h2>
+          <a href="/cars.html">Бүгдийг харах</a>
+        </div>
+        <div id="featured" class="grid"></div>
+      </section>
+    </main>
+    <script type="module">
+      import { fetchCars, renderCars } from './js/app.js';
+
+      const featuredEl = document.getElementById('featured');
+      const form = document.getElementById('search-form');
+
+      async function loadCars(query = '') {
+        const cars = await fetchCars(query);
+        renderCars(featuredEl, cars);
+      }
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const params = new URLSearchParams(new FormData(form)).toString();
+        loadCars(params ? `?${params}` : '');
+      });
+
+      loadCars('?maxPrice=150');
+    </script>
+  </body>
+</html>

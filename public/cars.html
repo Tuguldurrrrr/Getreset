@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="mn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>Машин хайх</title>
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo">GetReset Cars</div>
+      <nav class="nav">
+        <a class="nav__link" href="/">Нүүр</a>
+        <a class="nav__link" href="/my-bookings.html">Миний захиалга</a>
+      </nav>
+    </header>
+    <main class="container">
+      <h1>Машины жагсаалт</h1>
+      <div id="cars-grid" class="grid"></div>
+    </main>
+    <script type="module">
+      import { fetchCars, renderCars } from './js/app.js';
+
+      const grid = document.getElementById('cars-grid');
+      fetchCars().then((cars) => renderCars(grid, cars));
+    </script>
+  </body>
+</html>
